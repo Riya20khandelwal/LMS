@@ -75,23 +75,27 @@ def logoutView(request):
 	return redirect('home')
 
 def loginView(request):
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
-		if user is not None and user.is_active:
-			auth.login(request, user)
-			if user.is_admin or user.is_superuser:
-				return redirect('dashboard')
-			elif user.is_instructor:
-			    return redirect('instructor')
-			elif user.is_learner:
-			    return redirect('learner')
-			else:
-			    return redirect('login_form')
-		else:
-		    messages.info(request, "Invalid Username or Password")
-		    return redirect('login_form')
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user  = authenticate(request, username=username, password=password)
+        if user is not None and user.is_active:
+            auth.login(request, user)
+
+            if user.is_admin or user.is_superuser:
+                return redirect('dashboard')
+            elif user.is_instructor:
+                return redirect('instructor')
+            elif user.is_learner:
+                return redirect('learner')
+            else:
+                return redirect('login_form')
+        else:
+            messages.info(request, "Invalid Username or Password")
+            return redirect('login_form')
+    else:
+        return redirect('login_form')
+
 
 
 

@@ -152,4 +152,4 @@ class LearnerCourse(forms.ModelForm):
     def save(self):
         learner = Learner()
         learner.interests.add(*self.cleaned_data.get('interests'))
-        return learner_id
+        return learner.id
